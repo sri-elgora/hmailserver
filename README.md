@@ -1,3 +1,8 @@
+Changes from Original
+=====================
+
+Fixed a bug where iOS 18+ Mail-App causes hMailServer to crash with OutOfMemoryException
+
 hMailServer
 ===========
 
