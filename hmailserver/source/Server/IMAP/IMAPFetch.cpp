@@ -398,10 +398,14 @@ namespace HM
 
          GetBytesToSend_(body.GetLength(), oPart, iByteStart, iByteCount);
 
-	 // Fix for Apple Mail BODY PEEK with start + size issue
-	 // Start was being ignored before as it was never used
-	 // Changed to mimic 4.4.4 method since iByteStart is set in GetBytesToSend_
-         pOutBuf->Add((BYTE*) body.GetBuffer() + iByteStart, iByteCount);
+         // sri-elgora - iByteCount can be negative if iByteStart is bigger then body.GetLength causing EOutOfMemory
+         if (iByteCount > 0)
+         {
+            // Fix for Apple Mail BODY PEEK with start + size issue
+            // Start was being ignored before as it was never used
+            // Changed to mimic 4.4.4 method since iByteStart is set in GetBytesToSend_
+            pOutBuf->Add((BYTE*)body.GetBuffer() + iByteStart, iByteCount);
+         }
       }
       else if (oPart.GetShowBodyFull())
       {
